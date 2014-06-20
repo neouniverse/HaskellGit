@@ -1,10 +1,10 @@
 {-******************************************
   *     File Name: IOTextData.hs
   *        Author: neouniverse
-  * Last Modified: 2014/06/14 12:49:32
+  * Last Modified: 2014/06/20 20:05:25
   *******************************************-}
 
-module IOTextData (
+module HaskellGit.Fragment.IOTextData (
    readOneColumn
   ,readMultiColumn
   ,showOneColumn

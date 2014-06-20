@@ -1,10 +1,10 @@
 {-******************************************
   *     File Name: Flip3param.hs
   *        Author: neouniverse
-  * Last Modified: 2014/06/14 13:46:43
+  * Last Modified: 2014/06/20 20:05:12
   *******************************************-}
 
-module Flip3param (
+module HaskellGit.Fragment.Flip3param (
    flip132
   ,flip213
   ,flip231
