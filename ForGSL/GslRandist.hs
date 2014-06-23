@@ -1,27 +1,39 @@
 {-******************************************
   *     File Name: GslRandist.hs
   *        Author: neouniverse
-  * Last Modified: 2014/06/20 20:06:11
+  * Last Modified: 2014/06/23 16:28:45
   *******************************************-}
 
-module HaskellGit.ForGSL.GslRandist (
+module HasKAL.ExternalUtils.GSL.GslRandist (
    gslRanGaussian
   ,gslRanRayleigh
   ,gslRanFlat
   ,gslRanTdist
+  ,gslRanFdist
 ) where
 
 import Control.Monad as CM
-import System.Cmd as SC
 import System.Process as SP
 
-{--  実行速度  --}
+{--  Test code  --}
+-- import System.Cmd as SC
+-- main :: IO ()
+-- main = do
+--   print =<< gslRanGaussian 10 1.0
+--   SC.system $ "sleep " ++ (show "1")
+--   print =<< gslRanGaussian 10 1.0
+--   print =<< gslRanRayleigh 10 1.0
+--   print =<< gslRanFlat 10 (-1.0) 1.0
+--   print =<< gslRanTdist 10 10.0
+--   print =<< gslRanFdist 10 10.0 10.0
+
+{--  実行速度(テキスト出力含む)  --}
 --   100,000点
 --     1.391u 0.018s 0:01.37 102.1%    0+0k 0+1808io 0pf+0w  
 -- 1,000,000点
 --    13.856u 0.168s 0:13.60 103.0%   0+0k 0+18048io 0pf+0w
 
-
+{--  External Functions  --}
 ---- Gauss乱数
 --   num: データ点数
 -- sigma: 標準偏差
@@ -59,17 +71,13 @@ gslRanTdist num nu = do
   let cmd_string = [seed, (show num), "tdist", (show nu)]
   CM.liftM ((map read).lines) $ SP.readProcess "gsl-randist" cmd_string []
 
-{--  Test code  --}
--- main :: IO ()
--- main = do
---   print =<< gslRanGaussian 10 1.0
---   sleepCmd 1
---   print =<< gslRanGaussian 10 1.0
---   print =<<  gslRanRayleigh 10 1.0
---   print =<<  gslRanFlat 10 (-1.0) 1.0
---   print =<<  gslRanTdist 10 10.0
+---- F-dist乱数
+-- num: データ点数
+-- nu1: 自由度1
+-- nu2: 自由度2
+gslRanFdist :: Int -> Double -> Double -> IO [Double]
+gslRanFdist num nu1 nu2 = do
+  seed <- SP.readProcess "date" ["+%s"] []
+  let cmd_string = [seed, (show num), "fdist", (show nu1), (show nu2)]
+  CM.liftM ((map read).lines) $ SP.readProcess "gsl-randist" cmd_string []
 
--- sleepCmd :: Int -> IO ()
--- sleepCmd sec = do
---   SC.system $ "sleep " ++ (show sec)
---   return ()
