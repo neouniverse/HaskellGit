@@ -1,8 +1,15 @@
 {-******************************************
   *     File Name: MapNest.hs
   *        Author: neouniverse
-  * Last Modified: 2014/07/04 15:55:56
+  * Last Modified: 2014/07/09 14:36:24
   *******************************************-}
+
+module HaskellGit.Fragment.MapNest (
+   mapWith
+  ,mapZipWith
+  ,mapWith3
+) where
+
 
 mapWith :: (a -> b -> c) -> [a] -> [b] -> [[c]]
 mapWith f [] _ = []
