@@ -3,6 +3,8 @@ module WrapHasKAL.ForWaveUtils (
   module E
 , wavelenght
 , dropBothSideWaveData
+, takeWaveDataSecond
+, dropWaveDataSecond
 ) where
 
 import qualified Data.Vector.Storable as V (length)
@@ -16,3 +18,11 @@ wavelenght w = V.length $ gwdata w
 dropBothSideWaveData :: Int -> WaveData -> WaveData
 dropBothSideWaveData n w = dropWaveData n $ takeWaveData m w
   where m = wavelenght w - n
+
+takeWaveDataSecond :: Double -> WaveData -> WaveData
+takeWaveDataSecond s w = takeWaveData n w
+  where n = truncate $ s * (samplingFrequency w)
+
+dropWaveDataSecond :: Double -> WaveData -> WaveData
+dropWaveDataSecond s w = dropWaveData n w
+  where n = truncate $ s * (samplingFrequency w)
